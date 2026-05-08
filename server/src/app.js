@@ -20,8 +20,8 @@ function isAllowedOrigin(origin, clientUrl) {
     return true;
   }
 
-  if (process.env.NODE_ENV !== "production") {
-    return /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i.test(origin);
+  if (/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i.test(origin)) {
+    return true;
   }
 
   return false;

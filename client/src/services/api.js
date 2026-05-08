@@ -2,8 +2,17 @@ const DEFAULT_API_BASE_URL = "/api";
 const CONNECTION_ERROR_CODE = "SMART_WALLET_API_CONNECTION_ERROR";
 const CONNECTION_ERROR_MESSAGE = "Unable to connect to Smart Wallet API. Start the server and try again.";
 const configuredApiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+const defaultOriginApiBaseUrl = typeof window !== "undefined" && window.location.origin.startsWith("http")
+  ? `${window.location.origin}/api`
+  : DEFAULT_API_BASE_URL;
 
-const API_BASE_URLS = Array.from(new Set([configuredApiBaseUrl || DEFAULT_API_BASE_URL].filter(Boolean).map(normalizeBaseUrl)));
+const API_BASE_URLS = Array.from(
+  new Set(
+    [configuredApiBaseUrl, defaultOriginApiBaseUrl, DEFAULT_API_BASE_URL]
+      .filter(Boolean)
+      .map(normalizeBaseUrl)
+  )
+);
 
 let authToken = "";
 let activeApiBaseUrl = API_BASE_URLS[0] || DEFAULT_API_BASE_URL;
